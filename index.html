@@ -188,7 +188,53 @@
       display: flex; align-items: center; gap: 0.6rem;
     }
     .sub-label::after { content: ''; flex: 1; height: 1px; background: rgba(255,255,255,0.06); }
+    
+    /* ══ PORTFOLIO GRID (Behance) ══ */
+.portfolio-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.4rem;
+}
+.portfolio-card {
+  position: relative;
+  display: block;
+  border-radius: 14px;
+  overflow: hidden;
+  aspect-ratio: 4/5;
+  background: #1a1a1a;
+  text-decoration: none;
+  border: 1px solid var(--border);
+}
+.portfolio-card img {
+  width: 100%; height: 100%;
+  object-fit: cover; display: block;
+  transition: transform 0.5s ease, opacity 0.3s ease;
+}
+.portfolio-card:hover img { transform: scale(1.06); }
+.portfolio-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.15) 55%, transparent 100%);
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 1.4rem;
+}
+.portfolio-cat {
+  font-size: 0.62rem; font-weight: 700; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--orange); margin-bottom: 0.35rem;
+}
+.portfolio-title {
+  font-size: 1.05rem; font-weight: 600; color: #fff; line-height: 1.3;
+}
+.portfolio-link {
+  margin-top: 0.6rem; display: inline-flex; align-items: center; gap: 0.4rem;
+  font-size: 0.7rem; font-weight: 600; color: rgba(255,255,255,0.7);
+  opacity: 0; transform: translateY(6px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.portfolio-card:hover .portfolio-link { opacity: 1; transform: translateY(0); }
 
+@media (max-width: 1024px) { .portfolio-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 700px)  { .portfolio-grid { grid-template-columns: 1fr; } }
+    
     /* gallery */
     .gallery {
       display: grid; grid-template-columns: repeat(5,1fr); gap: 0.6rem;
@@ -382,87 +428,70 @@
     </section>
   </div>
 
-  <!-- ── PORTFOLIO ── -->
-  <section class="portfolio">
-    <header class="section-header">
-      <p class="section-label">Cases</p>
-      <h2 class="section-title">Portfólio</h2>
-    </header>
+<section class="portfolio">
+  <header class="section-header">
+    <p class="section-label">Cases</p>
+    <h2 class="section-title">Portfólio</h2>
+  </header>
 
-    <div class="case-block">
-      <div class="case-header">
-        <div class="case-meta">
-          <h3 class="case-client">Dream <span>Car</span></h3>
-          <p class="case-desc">Criação de artes para redes sociais, comunicação visual, landing pages e tráfego pago — com manipulação de imagem e inteligência artificial aplicada ao design.</p>
-        </div>
-        <div class="case-tags">
-          <span class="case-tag">Redes Sociais</span>
-          <span class="case-tag">Comunicação Visual</span>
-          <span class="case-tag">Landing Page</span>
-          <span class="case-tag">Tráfego Pago</span>
-          <span class="case-tag">IA</span>
-        </div>
+  <div class="portfolio-grid">
+
+    <a class="portfolio-card" href="#" target="_blank" rel="noopener">
+      <img src="img/portfolio-redes-sociais.jpg" alt="Redes Sociais" loading="lazy" />
+      <div class="portfolio-overlay">
+        <span class="portfolio-cat">Categoria</span>
+        <p class="portfolio-title">Redes Sociais e Campanhas Digitais</p>
+        <span class="portfolio-link">Ver no Behance →</span>
       </div>
+    </a>
 
-      <!-- Instagram -->
-      <div class="sub-section">
-        <p class="sub-label">Artes para Instagram</p>
-        <div class="gallery" id="gallery-instagram">
-          <div class="gal-item" data-index="0"><img src="img/dc-instagram-01.jpg" alt="Dia das Mães no Kartódromo" loading="lazy" /><div class="gal-overlay"><p class="gal-overlay-text">Ãniversariante do Mês<br><span style="color:var(--orange);font-size:0.68rem">Redes Sociais</span></p></div></div>
-          <div class="gal-item" data-index="1"><img src="img/dc-instagram-02.jpg" alt="Mega Encontro Ford" loading="lazy" /><div class="gal-overlay"><p class="gal-overlay-text">Mega Encontro Ford<br><span style="color:var(--orange);font-size:0.68rem">Redes Sociais · IA</span></p></div></div>
-          <div class="gal-item" data-index="2"><img src="img/dc-instagram-03.jpg" alt="Novidade no Acervo do Museu" loading="lazy" /><div class="gal-overlay"><p class="gal-overlay-text">Encontro Anual Mustang<br><span style="color:var(--orange);font-size:0.68rem">Redes Sociais</span></p></div></div>
-          <div class="gal-item" data-index="3"><img src="img/dc-instagram-04.jpg" alt="Concorra a um Passeio de Porsche" loading="lazy" /><div class="gal-overlay"><p class="gal-overlay-text">Kartódromo São Roque<br><span style="color:var(--orange);font-size:0.68rem">Redes Sociais</span></p></div></div>
-          <div class="gal-item" data-index="4"><img src="img/dc-instagram-05.jpg" alt="Coelhinho Chopinho no Dream Car" loading="lazy" /><div class="gal-overlay"><p class="gal-overlay-text">Coelhinho Chopinho no Dream Car<br><span style="color:var(--orange);font-size:0.68rem">Redes Sociais</span></p></div></div>
-          <div class="gal-item" data-index="5"><img src="img/dc-instagram-06.jpg" alt="Mega Encontro Astra" loading="lazy" /><div class="gal-overlay"><p class="gal-overlay-text">Mega Encontro Astra<br><span style="color:var(--orange);font-size:0.68rem">Redes Sociais</span></p></div></div>
-          <div class="gal-item" data-index="6"><img src="img/dc-instagram-07.jpg" alt="2º Encontro CoolKombi" loading="lazy" /><div class="gal-overlay"><p class="gal-overlay-text">2º Encontro CoolKombi<br><span style="color:var(--orange);font-size:0.68rem">Redes Sociais</span></p></div></div>
-          <div class="gal-item" data-index="7"><img src="img/dc-instagram-08.jpg" alt="Encontro de Carros Antigos" loading="lazy" /><div class="gal-overlay"><p class="gal-overlay-text">Encontro de Carros Antigos<br><span style="color:var(--orange);font-size:0.68rem">Redes Sociais</span></p></div></div>
-          <div class="gal-item" data-index="8"><img src="img/dc-instagram-09.jpg" alt="Encontro Somos Quadrados" loading="lazy" /><div class="gal-overlay"><p class="gal-overlay-text">Show de Drift<br><span style="color:var(--orange);font-size:0.68rem">Redes Sociais</span></p></div></div>
-          <div class="gal-item" data-index="9"><img src="img/dc-instagram-10.jpg" alt="Sextas e Sábados com Horário Estendido" loading="lazy" /><div class="gal-overlay"><p class="gal-overlay-text">Sextas e Sábados — Horário Estendido<br><span style="color:var(--orange);font-size:0.68rem">Redes Sociais</span></p></div></div>
-        </div>
+    <a class="portfolio-card" href="#" target="_blank" rel="noopener">
+      <img src="img/portfolio-impressos.jpg" alt="Impressos e Comunicação Visual" loading="lazy" />
+      <div class="portfolio-overlay">
+        <span class="portfolio-cat">Categoria</span>
+        <p class="portfolio-title">Impressos e Comunicação Visual</p>
+        <span class="portfolio-link">Ver no Behance →</span>
       </div>
+    </a>
 
-      <!-- Comunicação Visual -->
-      <div class="sub-section">
-        <p class="sub-label">Comunicação Visual</p>
-        <div class="coming-soon">
-          <div class="coming-soon-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v12H4z"/><path d="M2 20h20"/></svg></div>
-          <p>Em breve</p>
-        </div>
+    <a class="portfolio-card" href="#" target="_blank" rel="noopener">
+      <img src="img/portfolio-sites.jpg" alt="Sites e Landing Pages" loading="lazy" />
+      <div class="portfolio-overlay">
+        <span class="portfolio-cat">Categoria</span>
+        <p class="portfolio-title">Sites e Landing Pages</p>
+        <span class="portfolio-link">Ver no Behance →</span>
       </div>
+    </a>
 
-      <!-- Landing Page -->
-      <div class="sub-section">
-        <p class="sub-label">Landing Page</p>
-        <!-- Substitua SEU_VIDEO_ID pelo ID do vídeo no YouTube -->
-        <div class="coming-soon" id="lp-placeholder">
-          <div class="coming-soon-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
-          <p>Vídeo em breve</p>
-        </div>
-        <!-- Quando tiver o link do YouTube, descomente e cole o ID abaixo: -->
-        <!--
-        <div class="video-wrap">
-          <iframe src="https://www.youtube.com/embed/SEU_VIDEO_ID" allowfullscreen loading="lazy"></iframe>
-        </div>
-        -->
+    <a class="portfolio-card" href="#" target="_blank" rel="noopener">
+      <img src="img/portfolio-video.jpg" alt="Vídeo e Reels" loading="lazy" />
+      <div class="portfolio-overlay">
+        <span class="portfolio-cat">Categoria</span>
+        <p class="portfolio-title">Edição de Vídeo e Reels</p>
+        <span class="portfolio-link">Ver no Behance →</span>
       </div>
+    </a>
 
-      <!-- Tráfego Pago -->
-      <div class="sub-section">
-        <p class="sub-label">Tráfego Pago</p>
-        <div class="coming-soon" id="tp-placeholder">
-          <div class="coming-soon-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
-          <p>Vídeo em breve</p>
-        </div>
-        <!-- Quando tiver o link do YouTube, descomente e cole o ID abaixo: -->
-        <!--
-        <div class="video-wrap">
-          <iframe src="https://www.youtube.com/embed/SEU_VIDEO_ID" allowfullscreen loading="lazy"></iframe>
-        </div>
-        -->
+    <a class="portfolio-card" href="#" target="_blank" rel="noopener">
+      <img src="img/portfolio-ia.jpg" alt="Criação Visual com IA" loading="lazy" />
+      <div class="portfolio-overlay">
+        <span class="portfolio-cat">Categoria</span>
+        <p class="portfolio-title">Criação Visual com IA</p>
+        <span class="portfolio-link">Ver no Behance →</span>
       </div>
+    </a>
 
-    </div>
-  </section>
+    <a class="portfolio-card" href="#" target="_blank" rel="noopener">
+      <img src="img/portfolio-identidade.jpg" alt="Identidade Visual" loading="lazy" />
+      <div class="portfolio-overlay">
+        <span class="portfolio-cat">Categoria</span>
+        <p class="portfolio-title">Identidade Visual Estratégica</p>
+        <span class="portfolio-link">Ver no Behance →</span>
+      </div>
+    </a>
+
+  </div>
+</section>
 
   <!-- ── LIGHTBOX ── -->
   <div class="lightbox" id="lightbox">
