@@ -275,7 +275,57 @@
 
 @media (max-width: 1024px) { .portfolio-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 700px)  { .portfolio-grid { grid-template-columns: 1fr; } }
+/* ══ DEPOIMENTOS ══ */
+.testimonials-wrapper { background: #f5f5f5; }
+.testimonials {
+  padding: clamp(4rem,8vw,7rem) clamp(1.5rem,6vw,8rem);
+  max-width: 1300px; margin: 0 auto;
+}
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 3rem 4rem;
+}
+.testimonial {
+  display: flex;
+  gap: 1.3rem;
+  align-items: flex-start;
+}
+.testimonial-photo {
+  width: 78px; height: 96px;
+  object-fit: cover;
+  border-radius: 8px;
+  flex-shrink: 0;
+  filter: grayscale(1) contrast(1.05);
+}
+.testimonial-quote {
+  font-size: 0.92rem;
+  font-weight: 300;
+  line-height: 1.65;
+  color: #333;
+}
+.testimonial-quote::before { content: '"'; }
+.testimonial-quote::after { content: '"'; }
+.testimonial-author {
+  margin-top: 0.9rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #111;
+}
+.testimonial-location {
+  font-size: 0.78rem;
+  font-style: italic;
+  font-weight: 300;
+  color: #888;
+  margin-top: 0.15rem;
+}
 
+@media (max-width: 800px) {
+  .testimonials-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+}
+@media (max-width: 500px) {
+  .testimonial { flex-direction: column; }
+  .testimonial-photo { width: 100%; height: 160px; }
 /* ══ CTA FINAL ══ */
 .cta-final {
   background: var(--orange);
@@ -585,6 +635,58 @@ footer.site-footer {
     </a>
 
   </div>
+</section>
+  
+  <!-- ── DEPOIMENTOS ── -->
+<div class="testimonials-wrapper">
+<section class="testimonials">
+  <header class="section-header">
+    <p class="section-label">Depoimentos</p>
+    <h2 class="section-title dark">O que os <span>clientes falam</span></h2>
+  </header>
+
+  <div class="testimonials-grid">
+
+    <div class="testimonial">
+      <img class="testimonial-photo" src="img/depoimento-taua.jpg" alt="Tauã Pinto" loading="lazy" />
+      <div>
+        <p class="testimonial-quote">O Mateus é um super parceiro de trabalho que encontramos. Talentoso e muito atencioso, elevou o nível do design da empresa e tem nos ajudado a fazer crescer nosso negócio.</p>
+        <p class="testimonial-author">Tauã Pinto | Black Entretenimento</p>
+        <p class="testimonial-location">Itapema / SC</p>
+      </div>
+    </div>
+
+    <div class="testimonial">
+      <img class="testimonial-photo" src="img/depoimento-carla.jpg" alt="Carla de Oliveira" loading="lazy" />
+      <div>
+        <p class="testimonial-quote">Exceptional webdesigner! Mateus Carlini is an excellent professional who does his work with much love and care. Not only he's a graphic designer and has a very keen eye to make everything look great, he also pays attention to details and has a great habit of over delivering.</p>
+        <p class="testimonial-author">Carla de Oliveira | Transformational Breath</p>
+        <p class="testimonial-location">Roma / Itália</p>
+      </div>
+    </div>
+
+    <div class="testimonial">
+      <img class="testimonial-photo" src="img/depoimento-julia.jpg" alt="Júlia Bettineli" loading="lazy" />
+      <div>
+        <p class="testimonial-quote">O Mateus foi o responsável por criar a identidade da nossa marca, com muito profissionalismo e amor. Somos apaixonadas pela nossa identidade visual e colhemos bons frutos!</p>
+        <p class="testimonial-author">Júlia Bettineli | Dous Design & Arquitetura</p>
+        <p class="testimonial-location">Balneário Camboriú / SC</p>
+      </div>
+    </div>
+
+    <div class="testimonial">
+      <img class="testimonial-photo" src="img/depoimento-fernanda.jpg" alt="Fernanda Batista" loading="lazy" />
+      <div>
+        <p class="testimonial-quote">Mateus é dedicado e comprometido, um profissional de confiança que sempre entrega além do que foi proposto.</p>
+        <p class="testimonial-author">Fernanda Batista | Ouse Marketing</p>
+        <p class="testimonial-location">Itajaí / SC</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+</div>
+  
   <!-- ── CTA FINAL ── -->
 <section class="cta-final">
   <h2>Vamos criar algo juntos?</h2>
@@ -593,8 +695,7 @@ footer.site-footer {
     <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.11 1.524 5.838L.057 23.428a.75.75 0 0 0 .915.915l5.59-1.467A11.95 11.95 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.75a9.718 9.718 0 0 1-4.964-1.362l-.355-.214-3.679.965.981-3.595-.232-.371A9.718 9.718 0 0 1 2.25 12C2.25 6.615 6.615 2.25 12 2.25S21.75 6.615 21.75 12 17.385 21.75 12 21.75z"/></svg>
     Solicitar Orçamento
   </a>
-</section>
-
+  
 <!-- ── FOOTER ── -->
 <footer class="site-footer">
  <p class="logo"><img src="img/logo2.png" alt="mateuscarlini" /></p>
