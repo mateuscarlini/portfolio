@@ -215,55 +215,45 @@
       border-radius: 0 0 14px 14px; transition: width 0.4s ease;
     }
     .service-card:hover::after { width: 100%; }
+
+    /* ══ NOVO LAYOUT BENTO DOS SERVIÇOS ══ */
     .mc-bento {
       grid-template-columns: repeat(3, 1fr);
     }
     .mc-card {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
     }
     .mc-card .mc-icon {
-  width: 34px;
-  height: 34px;
-  color: var(--gray);
-  margin-bottom: 1rem;
-  transition: color 0.3s ease;
-}
-.mc-card .mc-icon svg {
-  width: 100%;
-  height: 100%;
-  display: block;
-}
-.mc-card:hover .mc-icon {
-  color: var(--orange);
-}
-.mc-card:hover {
-  border-color: rgba(255, 78, 0, 0.4);
-}
-@media (max-width: 700px) {
-  .mc-bento {
-    grid-template-columns: 1fr;
-  }
-}
-@media (min-width: 701px) and (max-width: 1024px) {
-  .mc-bento {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-    .services {
-  padding: 4rem 1.5rem;
-}
-@media (min-width: 640px) {
-  .services {
-    padding: 6rem 4rem;
-  }
-}
-@media (min-width: 1024px) {
-  .services {
-    padding: 8rem 8rem;
-  }
-}
+      width: 34px;
+      height: 34px;
+      color: var(--gray);
+      margin-bottom: 1rem;
+      transition: color 0.3s ease;
+    }
+    .mc-card .mc-icon svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+    .mc-card:hover .mc-icon {
+      color: var(--orange);
+    }
+    .mc-card:hover {
+      border-color: rgba(255, 78, 0, 0.4);
+    }
+    @media (max-width: 700px) {
+      .mc-bento {
+        grid-template-columns: 1fr;
+      }
+    }
+    @media (min-width: 701px) and (max-width: 1024px) {
+      .mc-bento {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
     /* ══ PORTFOLIO ══ */
     .portfolio {
       padding: clamp(4rem,8vw,8rem) clamp(1.5rem,6vw,8rem);
@@ -579,45 +569,53 @@ footer.site-footer {
   </section>
 
   <!-- ── SERVICES ── -->
- <div class="services-grid mc-bento">
+  <div class="services-wrapper">
+  <section class="services">
+    <header class="section-header">
+      <p class="section-label">O que eu faço</p>
+      <h2 class="section-title dark">Soluções<br><span>Visuais e Estratégicas</span></h2>
+    </header>
+    <div class="services-grid mc-bento">
 
-  <div class="service-card mc-card">
-    <div class="mc-icon"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="8" width="40" height="30" rx="4"/><path d="M4 16H44"/><circle cx="10" cy="12" r="1.3" fill="currentColor" stroke="none"/><circle cx="15" cy="12" r="1.3" fill="currentColor" stroke="none"/><path d="M12 27L19 21L25 26L36 18"/></svg></div>
-    <h3 class="card-title">Sites e Landing Pages Estratégicas</h3>
-    <p class="card-desc">Páginas criadas para apresentar, vender ou captar leads com clareza visual, boa estrutura de conteúdo e alinhamento com o objetivo da campanha.</p>
+      <div class="service-card mc-card">
+        <div class="mc-icon"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="8" width="40" height="30" rx="4"/><path d="M4 16H44"/><circle cx="10" cy="12" r="1.3" fill="currentColor" stroke="none"/><circle cx="15" cy="12" r="1.3" fill="currentColor" stroke="none"/><path d="M12 27L19 21L25 26L36 18"/></svg></div>
+        <h3 class="card-title">Sites e Landing Pages Estratégicas</h3>
+        <p class="card-desc">Páginas criadas para apresentar, vender ou captar leads com clareza visual, boa estrutura de conteúdo e alinhamento com o objetivo da campanha.</p>
+      </div>
+
+      <div class="service-card mc-card">
+        <div class="mc-icon"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="6" width="15" height="15" rx="3"/><rect x="27" y="6" width="15" height="15" rx="3"/><rect x="6" y="27" width="15" height="15" rx="3"/><circle cx="34.5" cy="34.5" r="7.5"/></svg></div>
+        <h3 class="card-title">Design para Redes Sociais e Campanhas Digitais</h3>
+        <p class="card-desc">Posts, carrosséis, anúncios e peças digitais com identidade visual consistente e comunicação clara.</p>
+      </div>
+
+      <div class="service-card mc-card">
+        <div class="mc-icon"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="10" y="6" width="24" height="30" rx="2"/><path d="M6 14H10M6 22H10M6 30H10"/></svg></div>
+        <h3 class="card-title">Impressos e Comunicação Visual</h3>
+        <p class="card-desc">Outdoors, flyers, cardápios e totens com arquivos preparados corretamente para produção.</p>
+      </div>
+
+      <div class="service-card mc-card">
+        <div class="mc-icon"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="10" width="34" height="28" rx="4"/><path d="M20 19L30 24L20 29V19Z" stroke-linejoin="round"/></svg></div>
+        <h3 class="card-title">Edição de Vídeo e Reels</h3>
+        <p class="card-desc">Vídeos, reels e conteúdos audiovisuais para redes sociais.</p>
+      </div>
+
+      <div class="service-card mc-card">
+        <div class="mc-icon"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M24 6L27 20L41 23L27 26L24 40L21 26L7 23L21 20Z" stroke-linejoin="round"/></svg></div>
+        <h3 class="card-title">Criação Visual com IA</h3>
+        <p class="card-desc">Criação e manipulação de imagens com inteligência artificial para campanhas, mockups e conteúdos criativos com acabamento profissional.</p>
+      </div>
+
+      <div class="service-card mc-card">
+        <div class="mc-icon"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="24" r="12"/><circle cx="30" cy="24" r="12"/></svg></div>
+        <h3 class="card-title">Identidade Visual Estratégica</h3>
+        <p class="card-desc">Criação ou redesign de identidades visuais para empresas que desejam mais clareza, personalidade e consistência.</p>
+      </div>
+
+    </div>
+  </section>
   </div>
-
-  <div class="service-card mc-card">
-    <div class="mc-icon"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="6" width="15" height="15" rx="3"/><rect x="27" y="6" width="15" height="15" rx="3"/><rect x="6" y="27" width="15" height="15" rx="3"/><circle cx="34.5" cy="34.5" r="7.5"/></svg></div>
-    <h3 class="card-title">Design para Redes Sociais e Campanhas Digitais</h3>
-    <p class="card-desc">Posts, carrosséis, anúncios e peças digitais com identidade visual consistente e comunicação clara.</p>
-  </div>
-
-  <div class="service-card mc-card">
-    <div class="mc-icon"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="10" y="6" width="24" height="30" rx="2"/><path d="M6 14H10M6 22H10M6 30H10"/></svg></div>
-    <h3 class="card-title">Impressos e Comunicação Visual</h3>
-    <p class="card-desc">Outdoors, flyers, cardápios e totens com arquivos preparados corretamente para produção.</p>
-  </div>
-
-  <div class="service-card mc-card">
-    <div class="mc-icon"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="10" width="34" height="28" rx="4"/><path d="M20 19L30 24L20 29V19Z" stroke-linejoin="round"/></svg></div>
-    <h3 class="card-title">Edição de Vídeo e Reels</h3>
-    <p class="card-desc">Vídeos, reels e conteúdos audiovisuais para redes sociais.</p>
-  </div>
-
-  <div class="service-card mc-card">
-    <div class="mc-icon"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M24 6L27 20L41 23L27 26L24 40L21 26L7 23L21 20Z" stroke-linejoin="round"/></svg></div>
-    <h3 class="card-title">Criação Visual com IA</h3>
-    <p class="card-desc">Criação e manipulação de imagens com inteligência artificial para campanhas, mockups e conteúdos criativos com acabamento profissional.</p>
-  </div>
-
-  <div class="service-card mc-card">
-    <div class="mc-icon"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="24" r="12"/><circle cx="30" cy="24" r="12"/></svg></div>
-    <h3 class="card-title">Identidade Visual Estratégica</h3>
-    <p class="card-desc">Criação ou redesign de identidades visuais para empresas que desejam mais clareza, personalidade e consistência.</p>
-  </div>
-
-</div>
 
 <section class="portfolio">
   <header class="section-header">
