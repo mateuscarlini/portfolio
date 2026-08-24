@@ -215,15 +215,15 @@
       border-radius: 0 0 14px 14px; transition: width 0.4s ease;
     }
     .service-card:hover::after { width: 100%; }
-.mc-bento {
-  grid-template-columns: repeat(3, 1fr);
-}
-.mc-card {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-}
-.mc-card .mc-icon {
+    .mc-bento {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .mc-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    }
+    .mc-card .mc-icon {
   width: 34px;
   height: 34px;
   color: var(--gray);
@@ -249,6 +249,19 @@
 @media (min-width: 701px) and (max-width: 1024px) {
   .mc-bento {
     grid-template-columns: repeat(2, 1fr);
+  }
+}
+    .services {
+  padding: 4rem 1.5rem;
+}
+@media (min-width: 640px) {
+  .services {
+    padding: 6rem 4rem;
+  }
+}
+@media (min-width: 1024px) {
+  .services {
+    padding: 8rem 8rem;
   }
 }
     /* ══ PORTFOLIO ══ */
