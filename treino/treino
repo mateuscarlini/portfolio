@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Treino em Casa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #F4F2ED;
+    --surface: #FFFFFF;
+    --surface-2: #ECE9E2;
+    --border: #DEDAD0;
+    --text: #1C1A16;
+    --text-dim: #726C60;
+    --accent: #C6531E;
+    --accent-text: #FFFFFF;
+    --ok: #2E7D4F;
+    --ok-bg: rgba(46,125,79,0.12);
+    --shadow: 0 1px 2px rgba(28,26,22,0.06);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg: #100E0C;
+      --surface: #1A1713;
+      --surface-2: #221E19;
+      --border: #332E27;
+      --text: #F3EFE8;
+      --text-dim: #A79D8E;
+      --accent: #FF7A33;
+      --accent-text: #191410;
+      --ok: #55C98A;
+      --ok-bg: rgba(85,201,138,0.14);
+      --shadow: 0 1px 2px rgba(0,0,0,0.4);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg: #100E0C;
+    --surface: #1A1713;
+    --surface-2: #221E19;
+    --border: #332E27;
+    --text: #F3EFE8;
+    --text-dim: #A79D8E;
+    --accent: #FF7A33;
+    --accent-text: #191410;
+    --ok: #55C98A;
+    --ok-bg: rgba(85,201,138,0.14);
+    --shadow: 0 1px 2px rgba(0,0,0,0.4);
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter',system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+  }
+  .wrap{
+    max-width:720px;
+    margin:0 auto;
+    padding:20px 16px 80px;
+  }
+  .top{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    margin-bottom:18px;
+    gap:12px;
+  }
+  h1{
+    font-family:'Oswald',sans-serif;
+    font-weight:600;
+    font-size:1.5rem;
+    margin:0;
+    letter-spacing:0.2px;
+  }
+  .theme-toggle{
+    border:1px solid var(--border);
+    background:var(--surface);
+    color:var(--text-dim);
+    border-radius:8px;
+    width:34px;
+    height:34px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    flex:none;
+    font-size:16px;
+  }
+
+  .tabs{
+    display:flex;
+    gap:8px;
+    margin-bottom:16px;
+  }
+  .tab{
+    flex:1;
+    padding:11px 8px;
+    text-align:center;
+    border-radius:10px;
+    border:1px solid var(--border);
+    background:var(--surface);
+    color:var(--text-dim);
+    font-family:'Oswald',sans-serif;
+    font-size:0.95rem;
+    font-weight:500;
+    cursor:pointer;
+    transition:border-color .15s, color .15s, background .15s;
+  }
+  .tab.active{
+    border-color:var(--accent);
+    color:var(--text);
+    background:var(--surface);
+    box-shadow:inset 0 0 0 1px var(--accent);
+  }
+
+  .progress-card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:16px 18px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+    margin-bottom:20px;
+    box-shadow:var(--shadow);
+  }
+  .progress-info .label{
+    color:var(--text-dim);
+    font-size:0.82rem;
+    margin-bottom:4px;
+  }
+  .progress-info .count{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:1.3rem;
+    font-weight:600;
+  }
+  .progress-bar-track{
+    width:100%;
+    height:6px;
+    background:var(--surface-2);
+    border-radius:99px;
+    margin-top:10px;
+    overflow:hidden;
+  }
+  .progress-bar-fill{
+    height:100%;
+    background:var(--accent);
+    border-radius:99px;
+    transition:width .25s ease;
+    width:0%;
+  }
+  .reset-btn{
+    border:1px solid var(--border);
+    background:transparent;
+    color:var(--text-dim);
+    padding:9px 14px;
+    border-radius:9px;
+    font-size:0.85rem;
+    cursor:pointer;
+    white-space:nowrap;
+    flex:none;
+  }
+  .reset-btn:hover{ color:var(--text); border-color:var(--text-dim); }
+
+  .section-intro{
+    margin-bottom:16px;
+  }
+  .section-intro h2{
+    font-family:'Oswald',sans-serif;
+    font-size:1.15rem;
+    font-weight:600;
+    margin:0 0 4px;
+  }
+  .section-intro p{
+    color:var(--text-dim);
+    font-size:0.92rem;
+    margin:0;
+    line-height:1.45;
+  }
+
+  .exercise{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:16px 18px;
+    margin-bottom:12px;
+    box-shadow:var(--shadow);
+  }
+  .exercise.done{
+    border-color:var(--ok);
+  }
+  .ex-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:12px;
+  }
+  .ex-name{
+    font-family:'Oswald',sans-serif;
+    font-weight:600;
+    font-size:1.05rem;
+  }
+  .ex-detail{
+    color:var(--text-dim);
+    font-size:0.88rem;
+    margin-top:2px;
+  }
+  .rest-badge{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:0.82rem;
+    font-weight:600;
+    color:var(--text-dim);
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:6px 10px;
+    cursor:pointer;
+    white-space:nowrap;
+    background:var(--surface-2);
+    transition:color .15s, border-color .15s;
+    flex:none;
+  }
+  .rest-badge:hover{ color:var(--accent); border-color:var(--accent); }
+  .rest-badge.running{
+    color:var(--accent-text);
+    background:var(--accent);
+    border-color:var(--accent);
+  }
+
+  .ex-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-top:14px;
+    gap:12px;
+    flex-wrap:wrap;
+  }
+  .sets{
+    display:flex;
+    gap:8px;
+  }
+  .set-check{
+    width:34px;
+    height:34px;
+    border-radius:9px;
+    border:1px solid var(--border);
+    background:var(--surface-2);
+    color:var(--text-dim);
+    font-family:'IBM Plex Mono',monospace;
+    font-size:0.9rem;
+    font-weight:600;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition:all .12s;
+  }
+  .set-check.checked{
+    background:var(--ok-bg);
+    border-color:var(--ok);
+    color:var(--ok);
+  }
+  .video-link{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    font-size:0.82rem;
+    color:var(--text-dim);
+    text-decoration:none;
+    border:1px solid var(--border);
+    padding:7px 12px;
+    border-radius:9px;
+    transition:color .15s, border-color .15s;
+  }
+  .video-link:hover{ color:var(--accent); border-color:var(--accent); }
+
+  .single-check{
+    width:100%;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    cursor:pointer;
+  }
+  .single-check .box{
+    width:22px;height:22px;flex:none;
+    border-radius:6px;
+    border:1px solid var(--border);
+    background:var(--surface-2);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .single-check.checked .box{
+    background:var(--ok-bg);
+    border-color:var(--ok);
+    color:var(--ok);
+  }
+  .single-check .box svg{ opacity:0; width:14px; height:14px; }
+  .single-check.checked .box svg{ opacity:1; }
+
+  .rule-note{
+    margin-top:8px;
+    color:var(--text-dim);
+    font-size:0.85rem;
+    line-height:1.5;
+    border-top:1px dashed var(--border);
+    padding-top:14px;
+  }
+
+  .timer-line{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:0.82rem;
+    color:var(--accent);
+    margin-top:8px;
+  }
+
+  @media (max-width:420px){
+    .ex-head{ flex-direction:column; }
+    .rest-badge{ align-self:flex-start; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <h1>Treino em casa</h1>
+    <button class="theme-toggle" id="themeToggle" title="Alternar tema">◐</button>
+  </div>
+
+  <div class="tabs" id="tabs"></div>
+
+  <div class="progress-card">
+    <div class="progress-info">
+      <div class="label">Progresso desta sessão</div>
+      <div class="count" id="progressCount">0 de 0 concluídos</div>
+      <div class="progress-bar-track"><div class="progress-bar-fill" id="progressFill"></div></div>
+    </div>
+    <button class="reset-btn" id="resetBtn">Reiniciar sessão</button>
+  </div>
+
+  <div id="content"></div>
+</div>
+
+<script>
+(function(){
+  var THEME_KEY = 'treino_theme';
+  var root = document.documentElement;
+  try{
+    var savedTheme = localStorage.getItem(THEME_KEY);
+    if(savedTheme) root.setAttribute('data-theme', savedTheme);
+  }catch(e){}
+  document.getElementById('themeToggle').addEventListener('click', function(){
+    var current = root.getAttribute('data-theme');
+    var isDark = current === 'dark' || (!current && window.matchMedia('(prefers-color-scheme: dark)').matches);
+    var next = isDark ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    try{ localStorage.setItem(THEME_KEY, next); }catch(e){}
+  });
+
+  var DATA = {
+    aquecimento: {
+      label: 'Aquecimento',
+      intro: {
+        title: 'Aquecimento · ~5 min',
+        text: 'Faça uma rodada, sem cansar demais. A ideia é só preparar o corpo.'
+      },
+      type: 'single',
+      exercises: [
+        { name:'Polichinelos', detail:'20 repetições', video:'polichinelo como fazer exercício' },
+        { name:'Agachamentos', detail:'10 repetições', video:'agachamento livre técnica correta' },
+        { name:'Rotação dos braços', detail:'10 para cada lado', video:'rotação de braços aquecimento' },
+        { name:'Flexões leves', detail:'5 repetições', video:'flexão de braço iniciante como fazer' },
+        { name:'Pendurado na barra', detail:'20 segundos', video:'dead hang pendurado na barra como fazer' }
+      ]
+    },
+    treinoA: {
+      label: 'Treino A',
+      intro: {
+        title: 'Treino A',
+        text: 'Complete todas as séries de um exercício antes de passar para o próximo.'
+      },
+      type: 'sets',
+      note: 'Regra do treino: mantenha a execução limpa e, na maioria das séries, pare com aproximadamente 1–2 repetições ainda em reserva.',
+      exercises: [
+        { name:'Barra fixa', detail:'3 × máximo controlado', rest:90, video:'barra fixa pull up técnica' },
+        { name:'Flexão normal', detail:'3 × 8–15', rest:60, video:'flexão de braço técnica correta' },
+        { name:'Afundo para trás', detail:'3 × 10 cada perna', rest:60, video:'afundo reverso passada como fazer' },
+        { name:'Flexão com pausa no fundo', detail:'3 × 6–12 · pausa de 1–2 s', rest:60, video:'flexão com pausa no fundo técnica' },
+        { name:'Prancha', detail:'3 × 30–45 s', rest:45, video:'prancha abdominal como fazer' },
+        { name:'Panturrilha em pé', detail:'3 × 15–25', rest:45, video:'elevação de panturrilha em pé' }
+      ]
+    },
+    treinoB: {
+      label: 'Treino B',
+      intro: {
+        title: 'Treino B',
+        text: 'Mesmo aquecimento do Treino A.'
+      },
+      type: 'sets',
+      exercises: [
+        { name:'Barra fixa com pausa no topo', detail:'3 × 3–8 · pausa de 1 s', rest:90, video:'barra fixa pausa no topo técnica' },
+        { name:'Flexão fechada', detail:'3 × 8–15', rest:60, video:'flexão fechada tríceps como fazer' },
+        { name:'Agachamento lento', detail:'3 × 15–25 · descida de ~3 s', rest:60, video:'agachamento tempo lento excêntrico' },
+        { name:'Ponte de glúteo normal', detail:'3 × 15–25 · contraia 2 s no topo', rest:60, video:'ponte de glúteo como fazer' },
+        { name:'Scapular pull-up', detail:'3 × 8–12', rest:60, video:'scapular pull up como fazer' },
+        { name:'Hollow hold', detail:'3 × 20–40 s', rest:45, video:'hollow hold como fazer' }
+      ]
+    }
+  };
+
+  var STORAGE_PREFIX = 'treino_progress_';
+  var activeTab = 'aquecimento';
+  var timers = {}; // key -> {remaining, total, intervalId}
+
+  function loadProgress(tabKey){
+    try{
+      var raw = localStorage.getItem(STORAGE_PREFIX + tabKey);
+      return raw ? JSON.parse(raw) : {};
+    }catch(e){ return {}; }
+  }
+  function saveProgress(tabKey, progress){
+    try{ localStorage.setItem(STORAGE_PREFIX + tabKey, JSON.stringify(progress)); }catch(e){}
+  }
+
+  function youtubeUrl(query){
+    return 'https://www.youtube.com/results?search_query=' + encodeURIComponent(query);
+  }
+
+  function beep(){
+    try{
+      var ctx = new (window.AudioContext || window.webkitAudioContext)();
+      var o = ctx.createOscillator();
+      var g = ctx.createGain();
+      o.connect(g); g.connect(ctx.destination);
+      o.type = 'sine';
+      o.frequency.value = 880;
+      g.gain.setValueAtTime(0.15, ctx.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.35);
+      o.start();
+      o.stop(ctx.currentTime + 0.35);
+    }catch(e){}
+  }
+
+  function fmtTime(s){
+    var m = Math.floor(s/60);
+    var sec = s%60;
+    return m > 0 ? (m + ':' + (sec<10?'0':'')+sec) : (sec + 's');
+  }
+
+  function renderTabs(){
+    var tabsEl = document.getElementById('tabs');
+    tabsEl.innerHTML = '';
+    Object.keys(DATA).forEach(function(key){
+      var btn = document.createElement('button');
+      btn.className = 'tab' + (key === activeTab ? ' active' : '');
+      btn.textContent = DATA[key].label;
+      btn.addEventListener('click', function(){
+        activeTab = key;
+        renderTabs();
+        renderContent();
+      });
+      tabsEl.appendChild(btn);
+    });
+  }
+
+  function totalUnits(tabKey){
+    var d = DATA[tabKey];
+    if(d.type === 'single') return d.exercises.length;
+    return d.exercises.length * 3;
+  }
+  function doneUnits(tabKey, progress){
+    var d = DATA[tabKey];
+    var count = 0;
+    if(d.type === 'single'){
+      d.exercises.forEach(function(ex, i){ if(progress[i]) count++; });
+    } else {
+      d.exercises.forEach(function(ex, i){
+        for(var s=0;s<3;s++){ if(progress[i+'_'+s]) count++; }
+      });
+    }
+    return count;
+  }
+
+  function updateProgressCard(){
+    var progress = loadProgress(activeTab);
+    var total = totalUnits(activeTab);
+    var done = doneUnits(activeTab, progress);
+    document.getElementById('progressCount').textContent = done + ' de ' + total + ' concluídos';
+    document.getElementById('progressFill').style.width = (total ? (done/total*100) : 0) + '%';
+  }
+
+  function startTimer(exerciseIdx, seconds, badgeEl, lineEl){
+    var key = activeTab + '_' + exerciseIdx;
+    if(timers[key]) clearInterval(timers[key].intervalId);
+    var remaining = seconds;
+    badgeEl.classList.add('running');
+    badgeEl.textContent = fmtTime(remaining);
+    lineEl.textContent = 'Descansando…';
+    var intervalId = setInterval(function(){
+      remaining--;
+      if(remaining <= 0){
+        clearInterval(intervalId);
+        delete timers[key];
+        badgeEl.classList.remove('running');
+        badgeEl.textContent = fmtTime(seconds);
+        lineEl.textContent = '';
+        beep();
+      } else {
+        badgeEl.textContent = fmtTime(remaining);
+        lineEl.textContent = 'Descansando… ' + fmtTime(remaining);
+      }
+    }, 1000);
+    timers[key] = { intervalId: intervalId };
+  }
+
+  function renderContent(){
+    var content = document.getElementById('content');
+    content.innerHTML = '';
+    var d = DATA[activeTab];
+    var progress = loadProgress(activeTab);
+
+    var introDiv = document.createElement('div');
+    introDiv.className = 'section-intro';
+    introDiv.innerHTML = '<h2>' + d.intro.title + '</h2><p>' + d.intro.text + '</p>';
+    content.appendChild(introDiv);
+
+    d.exercises.forEach(function(ex, i){
+      var card = document.createElement('div');
+      card.className = 'exercise';
+
+      var head = document.createElement('div');
+      head.className = 'ex-head';
+      var nameWrap = document.createElement('div');
+      nameWrap.innerHTML = '<div class="ex-name">' + ex.name + '</div><div class="ex-detail">' + ex.detail + '</div>';
+      head.appendChild(nameWrap);
+
+      if(d.type === 'sets' && ex.rest){
+        var badge = document.createElement('div');
+        badge.className = 'rest-badge';
+        badge.textContent = fmtTime(ex.rest);
+        head.appendChild(badge);
+      }
+      card.appendChild(head);
+
+      if(d.type === 'single'){
+        var row = document.createElement('div');
+        row.className = 'ex-row';
+        var check = document.createElement('div');
+        check.className = 'single-check' + (progress[i] ? ' checked' : '');
+        check.innerHTML = '<div class="box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></div><span>' + (progress[i] ? 'Concluído' : 'Marcar como feito') + '</span>';
+        check.addEventListener('click', function(){
+          progress[i] = !progress[i];
+          saveProgress(activeTab, progress);
+          renderContent();
+          updateProgressCard();
+        });
+        row.appendChild(check);
+
+        var vlink = document.createElement('a');
+        vlink.className = 'video-link';
+        vlink.href = youtubeUrl(ex.video);
+        vlink.target = '_blank';
+        vlink.rel = 'noopener';
+        vlink.textContent = '▶ Ver vídeo';
+        row.appendChild(vlink);
+
+        card.appendChild(row);
+        if(progress[i]) card.classList.add('done');
+      } else {
+        var lineEl = document.createElement('div');
+        lineEl.className = 'timer-line';
+        var row2 = document.createElement('div');
+        row2.className = 'ex-row';
+
+        var setsWrap = document.createElement('div');
+        setsWrap.className = 'sets';
+        var allChecked = true;
+        for(var s=0; s<3; s++){
+          (function(s){
+            var sc = document.createElement('div');
+            var isChecked = !!progress[i+'_'+s];
+            if(!isChecked) allChecked = false;
+            sc.className = 'set-check' + (isChecked ? ' checked' : '');
+            sc.textContent = (s+1);
+            sc.addEventListener('click', function(){
+              progress[i+'_'+s] = !progress[i+'_'+s];
+              saveProgress(activeTab, progress);
+              renderContent();
+              updateProgressCard();
+            });
+            setsWrap.appendChild(sc);
+          })(s);
+        }
+        row2.appendChild(setsWrap);
+
+        var vlink2 = document.createElement('a');
+        vlink2.className = 'video-link';
+        vlink2.href = youtubeUrl(ex.video);
+        vlink2.target = '_blank';
+        vlink2.rel = 'noopener';
+        vlink2.textContent = '▶ Ver vídeo';
+        row2.appendChild(vlink2);
+
+        card.appendChild(row2);
+        card.appendChild(lineEl);
+        if(allChecked) card.classList.add('done');
+
+        if(ex.rest){
+          var badgeRef = head.querySelector('.rest-badge');
+          badgeRef.addEventListener('click', function(){
+            startTimer(i, ex.rest, badgeRef, lineEl);
+          });
+        }
+      }
+
+      content.appendChild(card);
+    });
+
+    if(d.note){
+      var noteDiv = document.createElement('div');
+      noteDiv.className = 'rule-note';
+      noteDiv.textContent = d.note;
+      content.appendChild(noteDiv);
+    }
+  }
+
+  document.getElementById('resetBtn').addEventListener('click', function(){
+    saveProgress(activeTab, {});
+    renderContent();
+    updateProgressCard();
+  });
+
+  renderTabs();
+  renderContent();
+  updateProgressCard();
+})();
+</script>
+</body>
+</html>
