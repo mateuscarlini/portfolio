@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Treino em Casa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #F4F2ED;
+    --surface: #FFFFFF;
+    --surface-2: #ECE9E2;
+    --border: #DEDAD0;
+    --text: #1C1A16;
+    --text-dim: #726C60;
+    --accent: #C6531E;
+    --accent-text: #FFFFFF;
+    --ok: #2E7D4F;
+    --ok-bg: rgba(46,125,79,0.12);
+    --shadow: 0 1px 2px rgba(28,26,22,0.06);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg: #100E0C;
+      --surface: #1A1713;
+      --surface-2: #221E19;
+      --border: #332E27;
+      --text: #F3EFE8;
+      --text-dim: #A79D8E;
+      --accent: #FF7A33;
+      --accent-text: #191410;
+      --ok: #55C98A;
+      --ok-bg: rgba(85,201,138,0.14);
+      --shadow: 0 1px 2px rgba(0,0,0,0.4);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg: #100E0C;
+    --surface: #1A1713;
+    --surface-2: #221E19;
+    --border: #332E27;
+    --text: #F3EFE8;
+    --text-dim: #A79D8E;
+    --accent: #FF7A33;
+    --accent-text: #191410;
+    --ok: #55C98A;
+    --ok-bg: rgba(85,201,138,0.14);
+    --shadow: 0 1px 2px rgba(0,0,0,0.4);
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter',system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+  }
+  .wrap{
+    max-width:720px;
+    margin:0 auto;
+    padding:20px 16px 80px;
+  }
+  .top{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    margin-bottom:18px;
+    gap:12px;
+  }
+  h1{
+    font-family:'Oswald',sans-serif;
+    font-weight:600;
+    font-size:1.5rem;
+    margin:0;
+    letter-spacing:0.2px;
+  }
+  .theme-toggle{
+    border:1px solid var(--border);
+    background:var(--surface);
+    color:var(--text-dim);
+    border-radius:8px;
+    width:34px;
+    height:34px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    flex:none;
+    font-size:16px;
+  }
+
+  .tabs{
+    display:flex;
+    gap:8px;
+    margin-bottom:16px;
+  }
+  .tab{
+    flex:1;
+    padding:11px 8px;
+    text-align:center;
+    border-radius:10px;
+    border:1px solid var(--border);
+    background:var(--surface);
+    color:var(--text-dim);
+    font-family:'Oswald',sans-serif;
+    font-size:0.95rem;
+    font-weight:500;
+    cursor:pointer;
+    transition:border-color .15s, color .15s, background .15s;
+  }
+  .tab.active{
+    border-color:var(--accent);
+    color:var(--text);
+    background:var(--surface);
+    box-shadow:inset 0 0 0 1px var(--accent);
+  }
+
+  .progress-card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:16px 18px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+    margin-bottom:20px;
+    box-shadow:var(--shadow);
+  }
+  .progress-info .label{
+    color:var(--text-dim);
+    font-size:0.82rem;
+    margin-bottom:4px;
+  }
+  .progress-info .count{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:1.3rem;
+    font-weight:600;
+  }
+  .progress-bar-track{
+    width:100%;
+    height:6px;
+    background:var(--surface-2);
+    border-radius:99px;
+    margin-top:10px;
+    overflow:hidden;
+  }
+  .progress-bar-fill{
+    height:100%;
+    background:var(--accent);
+    border-radius:99px;
+    transition:width .25s ease;
+    width:0%;
+  }
+  .reset-btn{
+    border:1px solid var(--border);
+    background:transparent;
+    color:var(--text-dim);
+    padding:9px 14px;
+    border-radius:9px;
+    font-size:0.85rem;
+    cursor:pointer;
+    white-space:nowrap;
+    flex:none;
+  }
+  .reset-btn:hover{ color:var(--text); border-color:var(--text-dim); }
+
+  .section-intro{
+    margin-bottom:16px;
+  }
+  .section-intro h2{
+    font-family:'Oswald',sans-serif;
+    font-size:1.15rem;
+    font-weight:600;
+    margin:0 0 4px;
+  }
+  .section-intro p{
+    color:var(--text-dim);
+    font-size:0.92rem;
+    margin:0;
+    line-height:1.45;
+  }
+
+  .exercise{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:16px 18px;
+    margin-bottom:12px;
+    box-shadow:var(--shadow);
+  }
+  .exercise.done{
+    border-color:var(--ok);
+  }
+  .ex-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:12px;
+  }
+  .ex-name{
+    font-family:'Oswald',sans-serif;
+    font-weight:600;
+    font-size:1.05rem;
+  }
+  .ex-detail{
+    color:var(--text-dim);
+    font-size:0.88rem;
+    margin-top:2px;
+  }
+  .rest-badge{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:0.82rem;
+    font-weight:600;
+    color:var(--text-dim);
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:6px 10px;
+    cursor:pointer;
+    white-space:nowrap;
+    background:var(--surface-2);
+    transition:color .15s, border-color .15s;
+    flex:none;
+  }
+  .rest-badge:hover{ color:var(--accent); border-color:var(--accent); }
+  .rest-badge.running{
+    color:var(--accent-text);
+    background:var(--accent);
+    border-color:var(--accent);
+  }
+
+  .ex-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-top:14px;
+    gap:12px;
+    flex-wrap:wrap;
+  }
+  .sets{
+    display:flex;
+    gap:8px;
+  }
+  .set-check{
+    width:34px;
+    height:34px;
+    border-radius:9px;
+    border:1px solid var(--border);
+    background:var(--surface-2);
+    color:var(--text-dim);
+    font-family:'IBM Plex Mono',monospace;
+    font-size:0.9rem;
+    font-weight:600;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition:all .12s;
+  }
+  .set-check.checked{
+    background:var(--ok-bg);
+    border-color:var(--ok);
+    color:var(--ok);
+  }
+  .video-link{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    font-size:0.82rem;
+    color:var(--text-dim);
+    text-decoration:none;
+    border:1px solid var(--border);
+    padding:7px 12px;
+    border-radius:9px;
+    transition:color .15s, border-color .15s;
+  }
+  .video-link:hover{ color:var(--accent); border-color:var(--accent); }
+
+  .single-check{
+    width:100%;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    cursor:pointer;
+  }
+  .single-check .box{
+    width:22px;height:22px;flex:none;
+    border-radius:6px;
+    border:1px solid var(--border);
+    background:var(--surface-2);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .single-check.checked .box{
+    background:var(--ok-bg);
+    border-color:var(--ok);
+    color:var(--ok);
+  }
+  .single-check .box svg{ opacity:0; width:14px; height:14px; }
+  .single-check.checked .box svg{ opacity:1; }
+
+  .rule-note{
+    margin-top:8px;
+    color:var(--text-dim);
+    font-size:0.85rem;
+    line-height:1.5;
+    border-top:1px dashed var(--border);
+    padding-top:14px;
+  }
+
+  .timer-line{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:0.82rem;
+    color:var(--accent);
+    margin-top:8px;
+  }
+
+  @media (max-width:420px){
+    .ex-head{ flex-direction:column; }
+    .rest-badge{ align-self:flex-start; }
+  }
+
+  /* Circuito: integra-se ao layout e à paleta originais */
+  .circuit-summary{
+    background:var(--surface); border:1px solid var(--border); border-radius:14px;
+    padding:16px 18px; margin-bottom:16px; box-shadow:var(--shadow);
+  }
+  .circuit-summary-top{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;}
+  .circuit-eyebrow{font-family:'IBM Plex Mono',monospace;font-size:.73rem;font-weight:600;letter-spacing:.03em;color:var(--accent);text-transform:uppercase;}
+  .circuit-summary h3{font-family:'Oswald',sans-serif;font-size:1.25rem;font-weight:600;margin:4px 0 0;}
+  .circuit-counter{color:var(--text-dim);font-size:.84rem;}
+  .round-tabs{display:flex;gap:8px;margin-top:14px;}
+  .round-tab{
+    display:flex;align-items:center;justify-content:center;gap:7px;
+    flex:1;min-height:39px;padding:7px 9px;border-radius:9px;
+    border:1px solid var(--border);background:var(--surface-2);color:var(--text-dim);
+    cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:.8rem;font-weight:600;
+  }
+  .round-tab.active{background:var(--surface);border-color:var(--accent);color:var(--text);box-shadow:inset 0 0 0 1px var(--accent);}
+  .round-tab.complete:not(.active){color:var(--ok);border-color:var(--ok);background:var(--ok-bg);}
+  .round-note{font-size:.81rem;color:var(--text-dim);margin:12px 0 0;line-height:1.45;}
+  .exercise.circuit-current{border-color:var(--accent);}
+  .exercise.circuit-complete{border-color:var(--ok);}
+  .exercise-index{
+    display:flex;align-items:center;justify-content:center;min-width:31px;height:31px;
+    padding:0 5px;border-radius:8px;background:var(--surface-2);
+    border:1px solid var(--border);font-family:'IBM Plex Mono',monospace;
+    font-size:.8rem;font-weight:600;color:var(--text-dim);
+  }
+  .exercise.circuit-complete .exercise-index{color:var(--ok);background:var(--ok-bg);border-color:var(--ok);}
+  .circuit-head-left{display:flex;gap:12px;align-items:flex-start;}
+  .circuit-check{
+    border:1px solid var(--border);border-radius:9px;background:var(--surface-2);
+    color:var(--text);font-family:'Inter',system-ui,sans-serif;font-size:.86rem;
+    font-weight:600;padding:9px 13px;cursor:pointer;min-height:36px;
+  }
+  .circuit-check.checked{color:var(--ok);background:var(--ok-bg);border-color:var(--ok);}
+  .circuit-check:focus-visible,.round-tab:focus-visible,.action-btn:focus-visible,
+  .single-check:focus-visible,.tab:focus-visible,.theme-toggle:focus-visible,
+  .reset-btn:focus-visible{outline:2px solid var(--accent);outline-offset:3px;}
+  .circuit-bottom{
+    background:var(--surface);border:1px solid var(--border);border-radius:14px;
+    padding:16px 18px;margin:16px 0;box-shadow:var(--shadow);
+  }
+  .circuit-bottom h3{font-family:'Oswald',sans-serif;font-size:1.15rem;margin:0 0 6px;}
+  .circuit-bottom p{font-size:.87rem;color:var(--text-dim);line-height:1.5;margin:0;}
+  .rest-actions{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap;}
+  .action-btn{
+    border:1px solid var(--border);border-radius:9px;background:var(--surface-2);
+    color:var(--text);font:600 .86rem 'Inter',system-ui,sans-serif;
+    padding:10px 14px;min-height:40px;cursor:pointer;
+  }
+  .action-btn.primary{background:var(--accent);color:var(--accent-text);border-color:var(--accent);}
+  .action-btn.text-only{background:transparent;color:var(--text-dim);}
+  .rest-clock{font-family:'IBM Plex Mono',monospace;font-size:2rem;font-weight:600;color:var(--accent);margin-top:10px;}
+  .single-check{background:none;color:var(--text);font:inherit;padding:0;border:0;text-align:left;}
+  .progress-info{flex:1;min-width:0;}
+  @media (max-width:420px){
+    .circuit-head-left{gap:9px;}
+    .round-tab{font-size:.73rem;gap:3px;padding:7px 5px;}
+    .progress-card{gap:8px;padding:14px;}
+    .reset-btn{font-size:.78rem;padding:9px;}
+    .rest-actions .action-btn{flex:1;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <h1>Treino em casa</h1>
+    <button class="theme-toggle" id="themeToggle" title="Alternar tema">◐</button>
+  </div>
+
+  <div class="tabs" id="tabs"></div>
+
+  <div class="progress-card">
+    <div class="progress-info">
+      <div class="label">Progresso desta sessão</div>
+      <div class="count" id="progressCount">0 de 0 concluídos</div>
+      <div class="progress-bar-track"><div class="progress-bar-fill" id="progressFill"></div></div>
+    </div>
+    <button class="reset-btn" id="resetBtn">Reiniciar sessão</button>
+  </div>
+
+  <div id="content"></div>
+</div>
+
+<script>
+(function(){
+  'use strict';
+  var THEME_KEY = 'treino_theme';
+  var root = document.documentElement;
+  try {
+    var savedTheme = localStorage.getItem(THEME_KEY);
+    if(savedTheme) root.setAttribute('data-theme', savedTheme);
+  } catch(e) {}
+  document.getElementById('themeToggle').addEventListener('click', function(){
+    var current = root.getAttribute('data-theme');
+    var isDark = current === 'dark' || (!current && window.matchMedia('(prefers-color-scheme: dark)').matches);
+    var next = isDark ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem(THEME_KEY, next); } catch(e) {}
+  });
+
+  var ROUNDS = 3;
+  var DATA = {
+    aquecimento: {
+      label: 'Aquecimento',
+      intro: {
+        title: 'Aquecimento · ~5 min',
+        text: 'Faça uma rodada, sem cansar demais. A ideia é só preparar o corpo.'
+      },
+      type: 'single',
+      exercises: [
+        { name:'Polichinelos', detail:'20 repetições', video:'polichinelo como fazer exercício' },
+        { name:'Agachamentos', detail:'10 repetições', video:'agachamento livre técnica correta' },
+        { name:'Rotação dos braços', detail:'10 para cada lado', video:'rotação de braços aquecimento' },
+        { name:'Flexões leves', detail:'5 repetições', video:'flexão de braço iniciante como fazer' },
+        { name:'Pendurado na barra', detail:'20 segundos', video:'dead hang pendurado na barra como fazer' }
+      ]
+    },
+    treinoA: {
+      label: 'Treino A',
+      intro: {
+        title: 'Treino A · Circuito',
+        text: 'Faça os 4 exercícios em sequência, com apenas o tempo de trocar de posição. Descanse 60–90 s entre as voltas. Repita 3 vezes.'
+      },
+      type: 'circuit',
+      note: 'Mantenha a execução limpa. Na barra fixa e nas flexões, termine sem ir até a falha, deixando aproximadamente 1–2 repetições em reserva.',
+      exercises: [
+        { name:'Barra fixa', detail:'3–8 repetições controladas', video:'barra fixa pull up técnica' },
+        { name:'Flexão normal', detail:'8–15 repetições', video:'flexão de braço técnica correta' },
+        { name:'Afundo para trás', detail:'10 repetições por perna', video:'afundo reverso passada como fazer' },
+        { name:'Prancha', detail:'30–45 segundos', video:'prancha abdominal como fazer' }
+      ]
+    },
+    treinoB: {
+      label: 'Treino B',
+      intro: {
+        title: 'Treino B · Circuito',
+        text: 'Faça o aquecimento antes. Execute os 4 exercícios em sequência e descanse 60–90 s entre as voltas. Repita 3 vezes.'
+      },
+      type: 'circuit',
+      note: 'Alterne A e B em dias de treino, com recuperação entre sessões intensas dos mesmos músculos. Se sentir dor articular, interrompa e ajuste a execução.',
+      exercises: [
+        { name:'Barra fixa com pausa no topo', detail:'3–8 repetições · pausa de 1 s', video:'barra fixa pausa no topo técnica' },
+        { name:'Flexão fechada', detail:'8–15 repetições', video:'flexão fechada tríceps como fazer' },
+        { name:'Agachamento lento', detail:'15–20 repetições · descida de ~3 s', video:'agachamento tempo lento excêntrico' },
+        { name:'Hollow hold', detail:'20–40 segundos', video:'hollow hold como fazer' }
+      ]
+    }
+  };
+
+  var activeTab = 'aquecimento';
+  var currentRounds = { treinoA: loadRound('treinoA'), treinoB: loadRound('treinoB') };
+  var restTimer = null;
+  var checkSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+
+  // A versão v2 evita que as marcações do treino antigo de 6 exercícios
+  // apareçam em posições erradas no novo circuito de 4 exercícios.
+  function progressKey(tabKey){
+    return DATA[tabKey].type === 'circuit' ? 'treino_circuit_v2_progress_' + tabKey : 'treino_progress_' + tabKey;
+  }
+  function loadProgress(tabKey){
+    try {
+      var raw = localStorage.getItem(progressKey(tabKey));
+      var value = raw ? JSON.parse(raw) : {};
+      return value && typeof value === 'object' && !Array.isArray(value) ? value : {};
+    } catch(e) { return {}; }
+  }
+  function saveProgress(tabKey, progress){
+    try { localStorage.setItem(progressKey(tabKey), JSON.stringify(progress)); } catch(e) {}
+  }
+  function roundKey(tabKey){ return 'treino_circuit_v2_round_' + tabKey; }
+  function loadRound(tabKey){
+    try {
+      var value = Number(localStorage.getItem(roundKey(tabKey)));
+      return Number.isInteger(value) && value >= 0 && value < ROUNDS ? value : 0;
+    } catch(e) { return 0; }
+  }
+  function setRound(tabKey, round){
+    currentRounds[tabKey] = round;
+    try { localStorage.setItem(roundKey(tabKey), String(round)); } catch(e) {}
+  }
+  function youtubeUrl(query){
+    return 'https://www.youtube.com/results?search_query=' + encodeURIComponent(query);
+  }
+  function beep(){
+    try {
+      var ctx = new (window.AudioContext || window.webkitAudioContext)();
+      var o = ctx.createOscillator();
+      var g = ctx.createGain();
+      o.connect(g); g.connect(ctx.destination);
+      o.type = 'sine';
+      o.frequency.value = 880;
+      g.gain.setValueAtTime(0.15, ctx.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.35);
+      o.start(); o.stop(ctx.currentTime + 0.35);
+      o.onended = function(){ ctx.close(); };
+    } catch(e) {}
+  }
+  function fmtTime(s){
+    var m = Math.floor(s / 60), sec = s % 60;
+    return m + ':' + (sec < 10 ? '0' : '') + sec;
+  }
+  function el(tag, className, textValue){
+    var item = document.createElement(tag);
+    if(className) item.className = className;
+    if(textValue !== undefined) item.textContent = textValue;
+    return item;
+  }
+  function actionButton(label, className, onClick){
+    var btn = el('button', className, label);
+    btn.type = 'button';
+    btn.addEventListener('click', onClick);
+    return btn;
+  }
+  function videoLink(query){
+    var a = el('a', 'video-link', '▶ Ver vídeo');
+    a.href = youtubeUrl(query);
+    a.target = '_blank';
+    a.rel = 'noopener noreferrer';
+    return a;
+  }
+  function clearRest(){
+    if(restTimer){ clearInterval(restTimer.intervalId); restTimer = null; }
+  }
+  function renderTabs(){
+    var tabsEl = document.getElementById('tabs');
+    tabsEl.replaceChildren();
+    Object.keys(DATA).forEach(function(key){
+      var btn = actionButton(DATA[key].label, 'tab' + (key === activeTab ? ' active' : ''), function(){
+        if(key !== activeTab) clearRest();
+        activeTab = key;
+        renderTabs(); renderContent(); updateProgressCard();
+      });
+      btn.setAttribute('aria-pressed', key === activeTab ? 'true' : 'false');
+      tabsEl.appendChild(btn);
+    });
+  }
+  function totalUnits(tabKey){
+    var d = DATA[tabKey];
+    return d.type === 'single' ? d.exercises.length : d.exercises.length * ROUNDS;
+  }
+  function doneUnits(tabKey, progress){
+    var d = DATA[tabKey], count = 0;
+    if(d.type === 'single'){
+      d.exercises.forEach(function(ex, i){ if(progress[i]) count++; });
+    } else {
+      d.exercises.forEach(function(ex, i){
+        for(var s = 0; s < ROUNDS; s++) if(progress[s + '_' + i]) count++;
+      });
+    }
+    return count;
+  }
+  function roundDone(tabKey, progress, round){
+    var count = 0;
+    DATA[tabKey].exercises.forEach(function(ex, i){
+      if(progress[round + '_' + i]) count++;
+    });
+    return count;
+  }
+  function updateProgressCard(){
+    var progress = loadProgress(activeTab);
+    var total = totalUnits(activeTab), done = doneUnits(activeTab, progress);
+    document.getElementById('progressCount').textContent = done + ' de ' + total + ' concluídos';
+    document.getElementById('progressFill').style.width = (total ? done / total * 100 : 0) + '%';
+  }
+  function renderIntro(content, d){
+    var intro = el('div', 'section-intro');
+    intro.appendChild(el('h2', null, d.intro.title));
+    intro.appendChild(el('p', null, d.intro.text));
+    content.appendChild(intro);
+  }
+  function renderWarmup(content, d, progress){
+    d.exercises.forEach(function(ex, i){
+      var checked = !!progress[i];
+      var card = el('div', 'exercise' + (checked ? ' done' : ''));
+      var head = el('div', 'ex-head');
+      var info = el('div');
+      info.appendChild(el('div', 'ex-name', ex.name));
+      info.appendChild(el('div', 'ex-detail', ex.detail));
+      head.appendChild(info); card.appendChild(head);
+      var row = el('div', 'ex-row');
+      var check = actionButton('', 'single-check' + (checked ? ' checked' : ''), function(){
+        progress[i] = !progress[i];
+        saveProgress(activeTab, progress); renderContent(); updateProgressCard();
+      });
+      var checkbox = el('span', 'box'); checkbox.innerHTML = checkSvg;
+      check.appendChild(checkbox);
+      check.appendChild(el('span', null, checked ? 'Concluído' : 'Marcar como feito'));
+      check.setAttribute('aria-pressed', checked ? 'true' : 'false');
+      row.appendChild(check); row.appendChild(videoLink(ex.video));
+      card.appendChild(row); content.appendChild(card);
+    });
+  }
+  function switchRound(tabKey, round){
+    clearRest();
+    setRound(tabKey, round);
+    renderContent(); updateProgressCard();
+  }
+  function finishRest(){
+    if(!restTimer) return;
+    var tab = restTimer.tab, nextRound = restTimer.round + 1;
+    clearRest();
+    if(nextRound >= ROUNDS) return;
+    setRound(tab, nextRound);
+    if(activeTab === tab){ renderContent(); updateProgressCard(); }
+  }
+  function startRest(tab, round, seconds){
+    clearRest();
+    restTimer = { tab:tab, round:round, deadline:Date.now() + seconds * 1000, intervalId:null };
+    renderContent();
+    function tick(){
+      if(!restTimer || restTimer.tab !== tab || restTimer.round !== round) return;
+      var secondsLeft = Math.max(0, Math.ceil((restTimer.deadline - Date.now()) / 1000));
+      var clock = document.getElementById('restCountdown');
+      if(clock) clock.textContent = fmtTime(secondsLeft);
+      if(secondsLeft === 0){
+        beep();
+        finishRest();
+      }
+    }
+    // Usar Date.now() evita distorção caso o navegador desacelere timers em segundo plano.
+    restTimer.intervalId = setInterval(tick, 250);
+    tick();
+  }
+  function renderCircuit(content, d, progress){
+    var tab = activeTab, round = currentRounds[tab];
+    var done = roundDone(tab, progress, round);
+    var total = d.exercises.length;
+    var allDone = doneUnits(tab, progress) === total * ROUNDS;
+
+    var summary = el('div', 'circuit-summary');
+    var top = el('div', 'circuit-summary-top');
+    var left = el('div');
+    left.appendChild(el('div', 'circuit-eyebrow', 'Circuito · 3 voltas'));
+    left.appendChild(el('h3', null, 'Volta ' + (round + 1) + ' de ' + ROUNDS));
+    top.appendChild(left);
+    top.appendChild(el('div', 'circuit-counter', done + ' de ' + total + ' nesta volta'));
+    summary.appendChild(top);
+    var selector = el('div', 'round-tabs');
+    for(var s = 0; s < ROUNDS; s++){
+      (function(r){
+        var complete = roundDone(tab, progress, r) === total;
+        var label = (complete ? '✓ ' : '') + 'Volta ' + (r + 1);
+        var btn = actionButton(label, 'round-tab' + (r === round ? ' active' : '') + (complete ? ' complete' : ''), function(){
+          switchRound(tab, r);
+        });
+        btn.setAttribute('aria-pressed', r === round ? 'true' : 'false');
+        selector.appendChild(btn);
+      })(s);
+    }
+    summary.appendChild(selector);
+    summary.appendChild(el('p', 'round-note', 'Marque cada exercício ao terminar. Os botões acima permitem consultar ou corrigir qualquer volta.'));
+    content.appendChild(summary);
+
+    var firstNotDone = d.exercises.findIndex(function(ex, i){ return !progress[round + '_' + i]; });
+    d.exercises.forEach(function(ex, i){
+      var key = round + '_' + i;
+      var checked = !!progress[key];
+      var current = !checked && i === firstNotDone;
+      var card = el('div', 'exercise' + (checked ? ' circuit-complete' : '') + (current ? ' circuit-current' : ''));
+      var head = el('div', 'ex-head');
+      var group = el('div', 'circuit-head-left');
+      group.appendChild(el('div', 'exercise-index', checked ? '✓' : String(i + 1).padStart(2, '0')));
+      var info = el('div');
+      info.appendChild(el('div', 'ex-name', ex.name));
+      info.appendChild(el('div', 'ex-detail', ex.detail));
+      group.appendChild(info); head.appendChild(group);
+      card.appendChild(head);
+      var row = el('div', 'ex-row');
+      var check = actionButton(checked ? '✓ Concluído' : 'Marcar como feito', 'circuit-check' + (checked ? ' checked' : ''), function(){
+        progress[key] = !progress[key];
+        saveProgress(tab, progress);
+        // Se corrigir marcações durante o descanso, o timer é cancelado.
+        if(restTimer && roundDone(tab, progress, round) < total) clearRest();
+        renderContent(); updateProgressCard();
+      });
+      check.setAttribute('aria-pressed', checked ? 'true' : 'false');
+      row.appendChild(check); row.appendChild(videoLink(ex.video));
+      card.appendChild(row); content.appendChild(card);
+    });
+
+    var bottom = el('div', 'circuit-bottom');
+    if(done < total){
+      bottom.appendChild(el('h3', null, 'Continue o circuito'));
+      bottom.appendChild(el('p', null, 'Faltam ' + (total - done) + ' exercício' + ((total - done) === 1 ? '' : 's') + ' nesta volta. Sem descanso programado entre eles; ajuste o ritmo se precisar.'));
+    } else if(round === ROUNDS - 1 && allDone){
+      bottom.appendChild(el('h3', null, 'Treino concluído! ✓'));
+      bottom.appendChild(el('p', null, 'Você completou as 3 voltas e os 12 exercícios do circuito. Bom trabalho!'));
+    } else if(round === ROUNDS - 1){
+      bottom.appendChild(el('h3', null, 'Volta 3 concluída'));
+      bottom.appendChild(el('p', null, 'Você terminou esta volta. Confira as voltas anteriores para concluir o circuito inteiro.'));
+    } else if(restTimer && restTimer.tab === tab && restTimer.round === round){
+      bottom.appendChild(el('h3', null, 'Descanso entre voltas'));
+      bottom.appendChild(el('p', null, 'Próxima volta começa ao final do cronômetro. Respire e prepare-se.'));
+      bottom.appendChild(el('div', 'rest-clock', fmtTime(Math.max(0, Math.ceil((restTimer.deadline - Date.now()) / 1000)))));
+      bottom.lastChild.id = 'restCountdown';
+      bottom.lastChild.setAttribute('role', 'timer');
+      var runningActions = el('div', 'rest-actions');
+      runningActions.appendChild(actionButton('Pular descanso →', 'action-btn primary', finishRest));
+      bottom.appendChild(runningActions);
+    } else {
+      bottom.appendChild(el('h3', null, 'Volta ' + (round + 1) + ' concluída!'));
+      bottom.appendChild(el('p', null, 'Descanse de 60 a 90 segundos antes de começar a próxima volta.'));
+      var buttons = el('div', 'rest-actions');
+      buttons.appendChild(actionButton('Descansar 60s', 'action-btn primary', function(){ startRest(tab, round, 60); }));
+      buttons.appendChild(actionButton('Descansar 90s', 'action-btn', function(){ startRest(tab, round, 90); }));
+      buttons.appendChild(actionButton('Próxima volta →', 'action-btn text-only', function(){ switchRound(tab, round + 1); }));
+      bottom.appendChild(buttons);
+    }
+    content.appendChild(bottom);
+  }
+  function renderContent(){
+    var content = document.getElementById('content');
+    content.replaceChildren();
+    var d = DATA[activeTab], progress = loadProgress(activeTab);
+    renderIntro(content, d);
+    if(d.type === 'single') renderWarmup(content, d, progress);
+    else renderCircuit(content, d, progress);
+    if(d.note){
+      content.appendChild(el('div', 'rule-note', d.note));
+    }
+  }
+  document.getElementById('resetBtn').addEventListener('click', function(){
+    clearRest();
+    saveProgress(activeTab, {});
+    if(DATA[activeTab].type === 'circuit') setRound(activeTab, 0);
+    renderContent(); updateProgressCard();
+  });
+  renderTabs(); renderContent(); updateProgressCard();
+})();
+</script>
+</body>
+</html>
